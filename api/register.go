@@ -9,5 +9,6 @@ func init() {
 	apicontainer.Register(map[string]apicontainer.APIHandler{
 		"mobile/user/info":  &user.InfoAPI{},
 		"mobile/user/login": &user.LoginAPI{},
+		"mobile/user/panic": &user.PanicAPI{},
 	})
 }
