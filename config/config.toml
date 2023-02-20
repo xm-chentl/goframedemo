@@ -1,0 +1,11 @@
+[server]
+    name = "goframe-demo"
+    address = ":8199"
+    
+[database]
+    link  = "mysql:root:123456@tcp(localhost:3308)/mytest"
+
+[jaeger]
+    endPoint = "localhost:6831"
+
+
