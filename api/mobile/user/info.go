@@ -15,7 +15,6 @@ type InfoAPI struct {
 }
 
 func (s InfoAPI) Call(ctx context.Context) (res interface{}, err error) {
-	panic("测试报错")
 	res = map[string]interface{}{
 		"id":    s.ID,
 		"debug": s.Mode,

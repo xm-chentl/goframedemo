@@ -11,7 +11,7 @@ import (
 type LoginAPI struct {
 	g.Meta `method:"POST"`
 
-	Person contract.IPerson `inject:""`
+	Person contract.IPersonService `inject:""`
 
 	Name string `v:"name @required|length:6,30#请输入用户名称|用户名称长度非法"`
 }
