@@ -10,7 +10,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	userApp "github.com/xm-chentl/goframedemo/internal/model/views/user_app"
 	"github.com/xm-chentl/goframedemo/internal/service"
-	"github.com/xm-chentl/goframedemo/utility"
+	"github.com/xm-chentl/goframedemo/utils"
 )
 
 const (
@@ -33,17 +33,17 @@ func (s AppGenAPI) Call(ctx context.Context) (res interface{}, err error) {
 	// todo: 暂时用统计的用户信息
 	entry, err := service.UserApp().Get(ctx, s.UserAppID)
 	if err != nil {
-		err = utility.NewCustomError(602, "获取信息失败")
+		err = utils.NewCustomError(602, "获取信息失败")
 		return
 	}
 	if entry.Id == 0 {
-		err = utility.NewCustomError(604, "未找到对应有效应用")
+		err = utils.NewCustomError(604, "未找到对应有效应用")
 		return
 	}
 
-	prvBytes, pubBytes, err := utility.GenRsaKey()
+	prvBytes, pubBytes, err := utils.GenRsaKey()
 	if err != nil {
-		err = utility.NewCustomError(603, "生成密钥失败")
+		err = utils.NewCustomError(603, "生成密钥失败")
 		return
 	}
 
@@ -53,7 +53,7 @@ func (s AppGenAPI) Call(ctx context.Context) (res interface{}, err error) {
 	}
 	licenseCodeByte, err := json.Marshal(licenseDataResp)
 	if err != nil {
-		err = utility.NewCustomError(605, "生成许可证失败")
+		err = utils.NewCustomError(605, "生成许可证失败")
 		return
 	}
 
@@ -73,7 +73,7 @@ func (s AppGenAPI) Call(ctx context.Context) (res interface{}, err error) {
 	}
 	err = service.UserApp().UpdateLicense(ctx, resp)
 	if err != nil {
-		err = utility.NewCustomError(601, "保存许可信息失败: %v", err)
+		err = utils.NewCustomError(601, "保存许可信息失败: %v", err)
 		return
 	}
 

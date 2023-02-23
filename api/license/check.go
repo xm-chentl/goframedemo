@@ -8,7 +8,7 @@ import (
 	"github.com/farmerx/gorsa"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/xm-chentl/goframedemo/internal/service"
-	"github.com/xm-chentl/goframedemo/utility"
+	"github.com/xm-chentl/goframedemo/utils"
 )
 
 type CheckAPI struct {
@@ -22,11 +22,11 @@ func (s CheckAPI) Call(ctx context.Context) (res interface{}, err error) {
 	// todo: 返回有效期(开始、结束时间)
 	entry, err := service.UserApp().Get(ctx, s.UserAppID)
 	if err != nil {
-		err = utility.NewCustomError(602, "获取信息失败")
+		err = utils.NewCustomError(602, "获取信息失败")
 		return
 	}
 	if entry.Id == 0 {
-		err = utility.NewCustomError(604, "未找到对应有效应用")
+		err = utils.NewCustomError(604, "未找到对应有效应用")
 		return
 	}
 
@@ -35,13 +35,13 @@ func (s CheckAPI) Call(ctx context.Context) (res interface{}, err error) {
 	licenseCode, _ := hex.DecodeString(s.LicenseCode)
 	licenseCodeBytes, err := gorsa.RSA.PubKeyDECRYPT(licenseCode)
 	if err != nil {
-		err = utility.NewCustomError(607, "无效的许可证")
+		err = utils.NewCustomError(607, "无效的许可证")
 		return
 	}
 
 	var licenseDataResp licenseData
 	if err = json.Unmarshal(licenseCodeBytes, &licenseDataResp); err != nil {
-		err = utility.NewCustomError(607, "无效的许可证")
+		err = utils.NewCustomError(607, "无效的许可证")
 		return
 	}
 	res = licenseDataResp

@@ -7,7 +7,7 @@ import (
 	userapp "github.com/xm-chentl/goframedemo/internal/model/views/user_app"
 	"github.com/xm-chentl/goframedemo/internal/service"
 	"github.com/xm-chentl/goframedemo/mock"
-	"github.com/xm-chentl/goframedemo/utility"
+	"github.com/xm-chentl/goframedemo/utils"
 )
 
 type BuyAPI struct {
@@ -29,7 +29,7 @@ func (s BuyAPI) Call(ctx context.Context) (res interface{}, err error) {
 		UserName: user.Name,
 	})
 	if err != nil {
-		err = utility.NewCustomError(601, "购买失败")
+		err = utils.NewCustomError(601, "购买失败")
 		return
 	}
 	res = id

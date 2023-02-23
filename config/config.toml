@@ -3,7 +3,10 @@
     address = ":8199"
     
 [database]
-    link  = "mysql:root:123456@tcp(localhost:3308)/mytest"
+    link  = "root:123456@tcp(localhost:3308)/mytest"
+    
+[mongo]
+    link = "mongodb://localhost:27017"
 
 [jaeger]
     endPoint = "http://localhost:14268/api/traces"

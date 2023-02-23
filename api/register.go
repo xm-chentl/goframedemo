@@ -4,7 +4,7 @@ import (
 	"github.com/xm-chentl/goframedemo/api/app"
 	"github.com/xm-chentl/goframedemo/api/license"
 	"github.com/xm-chentl/goframedemo/api/mobile/user"
-	"github.com/xm-chentl/goframedemo/utility/apicontainer"
+	"github.com/xm-chentl/goframedemo/utils/apicontainer"
 )
 
 func init() {

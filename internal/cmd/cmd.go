@@ -14,8 +14,8 @@ import (
 	_ "github.com/xm-chentl/goframedemo/api"
 	"github.com/xm-chentl/goframedemo/internal/controller"
 	_ "github.com/xm-chentl/goframedemo/internal/logic"
-	"github.com/xm-chentl/goframedemo/utility"
-	"github.com/xm-chentl/goframedemo/utility/apicontainer"
+	utility "github.com/xm-chentl/goframedemo/utils"
+	"github.com/xm-chentl/goframedemo/utils/apicontainer"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -41,8 +41,8 @@ var (
 		Brief: "start http server",
 		Func: func(_ context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
+			// todo: 之前是的goframe
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				// group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(handlers...)
 			})
 
@@ -58,12 +58,11 @@ var (
 	}
 )
 
-func baseHandler(route func(r *ghttp.Request) string) func(r *ghttp.Request) {
+func baseHandler(genRoute func(r *ghttp.Request) string) func(r *ghttp.Request) {
 	return func(r *ghttp.Request) {
 		ctx := context.Background()
 		var err error
 		resp := resp{}
-		// tracer, tracerCloser, err := InitJaeger()
 		if err != nil {
 			return
 		}
@@ -89,8 +88,7 @@ func baseHandler(route func(r *ghttp.Request) string) func(r *ghttp.Request) {
 		}()
 
 		// 提取路由
-		path := route(r)
-		// path := fmt.Sprintf("mobile/%s/%s", r.Get("module"), r.Get("action"))
+		path := genRoute(r)
 		api, ok := apicontainer.Get(path)
 		if !ok {
 			err = utility.NewCustomError(504, "api (%s) not exists", path)
@@ -117,23 +115,6 @@ func baseHandler(route func(r *ghttp.Request) string) func(r *ghttp.Request) {
 			return
 		}
 
-		// root span
-		// spanCtx, _ := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
-		// var span opentracing.Span
-		// if spanCtx != nil {
-		// 	// 存在则创建子span
-		// 	span = tracer.StartSpan(
-		// 		path,
-		// 		opentracing.ChildOf(spanCtx),
-		// 	)
-		// } else {
-		// 	span = tracer.StartSpan(path)
-		// 	err = tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
-		// 	if err != nil {
-		// 		return
-		// 	}
-		// }
-		// defer span.Finish()
 		resp.Data, err = apiInterface.(apicontainer.APIHandler).Call(ctx)
 	}
 }
