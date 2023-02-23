@@ -6,6 +6,6 @@
     link  = "mysql:root:123456@tcp(localhost:3308)/mytest"
 
 [jaeger]
-    endPoint = "localhost:6831"
+    endPoint = "http://localhost:14268/api/traces"
 
 

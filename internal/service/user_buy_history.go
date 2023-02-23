@@ -12,22 +12,22 @@ import (
 )
 
 type (
-	IPerson interface {
-		Get(ctx context.Context, ID int) (entry entity.Person, err error)
+	IUserBuyHistory interface {
+		Get(ctx context.Context, id int) (entry entity.UserBuyHistory, err error)
 	}
 )
 
 var (
-	localPerson IPerson
+	localUserBuyHistory IUserBuyHistory
 )
 
-func Person() IPerson {
-	if localPerson == nil {
-		panic("implement not found for interface IPerson, forgot register?")
+func UserBuyHistory() IUserBuyHistory {
+	if localUserBuyHistory == nil {
+		panic("implement not found for interface IUserBuyHistory, forgot register?")
 	}
-	return localPerson
+	return localUserBuyHistory
 }
 
-func RegisterPerson(i IPerson) {
-	localPerson = i
+func RegisterUserBuyHistory(i IUserBuyHistory) {
+	localUserBuyHistory = i
 }
